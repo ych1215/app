@@ -1,0 +1,118 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* ========== [게시판 목록] ========== */
+.bbs_table_wrap { position:relative; }
+
+/* 게시판 tabs */
+#contents .bbs_tabs { margin-bottom:10px; zoom:1;}
+#contents .bbs_tabs:after {content:""; display:block; clear:both;}
+#contents .bbs_tabs h3 { float:left; margin:0; padding:0; background:none; width:33%;}
+#contents .bbs_tabs h3 a { position:relative; display:block; padding:12px 10px; color:#666; border:1px solid #aaa; background:#eee; text-align:center; }
+#contents .bbs_tabs h3 a i { position:absolute; top:100%; left:0; display:block; width:100%; height:5px; }
+#contents .bbs_tabs h3 a.on,
+#contents .bbs_tabs h3 a:hover,
+#contents .bbs_tabs h3 a:focus,
+#contents .bbs_tabs h3 a:active { color:#fff; border:1px solid #e51937; background:#e51937; }
+#contents .bbs_tabs h3 a.on i,
+#contents .bbs_tabs h3 a:hover i,
+#contents .bbs_tabs h3 a:focus i,
+#contents .bbs_tabs h3 a:active i {background:url("/resources/images/common/bbstab_arrow.gif") center bottom no-repeat;}
+
+
+/* 게시판 상단메뉴 */
+.bbslist_top_wrap { margin-bottom:5px; padding:7px 15px; border:1px solid #ccc; background:#fff; }
+.bbslist_top_wrap:after {content:""; display:block; clear:both;}
+.bbslist_top_wrap strong { padding:0 5px 0 12px; color:#333; font-size:16px; background:url("/resources/images/common/bul_arrow.gif") 0 5px no-repeat; }
+
+.bbslist_top_wrap p { float:left; }
+.bbslist_top_wrap p.date + p.keyword  { margin-left:30px; }
+.bbslist_top_wrap p.date input[type=text]  { width:95px; } 
+.bbslist_top_wrap p.keyword {}
+.bbslist_top_wrap p.keyword select { width:120px; } 
+
+@media (min-width: 768px) and (max-width: 979px) {
+	.bbslist_top_wrap p.date + p.keyword  { margin-left:0px; }
+	.bbslist_top_wrap p.keyword  { margin-top: 10px; }
+}
+
+/* 게시판 리스트 테이블 */
+.bbs_list_wrap {}
+
+.bbs_list_table {table-layout:fixed;}
+.bbs_list_table th,
+.bbs_list_table td {padding:8px 0.43em 10px; color:#333; font-size:14px; border-bottom:1px solid #ccc; word-break:break-all;}
+
+.bbs_list_table thead th { border-top:1px solid #e51937; border-bottom:1px solid #666; background:#eee; }
+.bbs_list_table tbody th { }
+.bbs_list_table tbody td { text-align:center;}
+
+.bbs_list_table tbody tr:nth-child(even) th,
+.bbs_list_table tbody tr:nth-child(even) td { background:#fff;}
+.bbs_list_table tbody td.subject { padding-left:10px; color:#111; text-align:left; }
+.bbs_list_table tbody td.subject a { color:#111; cursor:pointer; }
+.bbs_list_table tbody td.subject a:hover, a:focus, a:active { color:#e31837; text-decoration:none; }
+
+.bbs_list_table tbody td.new { background:url("/resources/images/common/icon_new.gif") 0 11px no-repeat; vertical-align:middle; }
+
+.bbs_list_table .notice { color:#e31837; font-weight:bold; }
+
+.bbs_list_table a:link {}
+.bbs_list_table a:hover { color:#f14950; text-decoration:underline; }
+
+
+/* ========== [게시판 읽기 & 쓰기] ========== */
+.bbs_view_wrap { }
+/* 게시판 읽기 & 쓰기 테이블 */
+.bbs_view_table { border-top:2px solid #e31837; border-left:1px solid #ccc; }
+.bbs_view_table th,
+.bbs_view_table td {padding:8px 0.83em 10px; color:#333; font-size:14px; border-bottom:1px solid #ccc; word-break:break-all;}
+.bbs_view_table th { background:#f2f2f2; border-right:1px solid #ccc;}
+.bbs_view_table td { border-right:1px solid #ccc; background:#fff; line-height:1.4em; }
+
+/* 첨부화일 리스트 */
+.bbs_view_wrap .file_list {}
+.bbs_view_wrap .file_list:after {content:""; display:block; clear:both;}
+.bbs_view_wrap .file_list li { float:left; margin:2px 5px 2px 0; white-space: nowrap;}
+.bbs_view_wrap .file_list a.del { margin:0 5px;}
+.bbs_view_wrap .file_list img {vertical-align: bottom;}
+.bbs_view_wrap .file_list span.del { padding:3px 5px; color:#e31837; font-weight:bold;}
+
+/* 게시판 읽기 코멘트 테이블 * table 03 */
+.bbs_comment_table { background:#f2f2f2; border-top:1px solid #aaa;}
+.bbs_comment_table th,
+.bbs_comment_table td {padding:8px 0.43em 10px; color:#333; font-size:14px; border-bottom:1px solid #ccc; word-break:break-all;}
+.bbs_comment_table td.comm_name {border-right:1px solid #ccc; }
+.bbs_comment_table td.comm_cont { color:#444; background:#fff; }
+.bbs_comment_table td.comm_cont span { margin-right:3px; }
+
+
+/* ========== [페이징] ========== */
+/* paging */
+.paging { text-align:center; padding:1.6em; }
+.paging .num a { display:inline-block; margin:0 3px 0 0; padding:8px 10px; color:#898a8b; border:1px solid #dddddd; font-size:16px; vertical-align:middle; }
+.paging strong { display:inline-block;  margin:0 3px 0 0; padding:8px 10px; color:#fff; border:1px solid #e31837; background:#e31837; font-size:16px; font-weight:bold; vertical-align:middle; }
+
+/* link */
+.paging .num a, .paging .num a:link, .paging .num a:visited { color:#898a8b; text-decoration:none; background:#fff; }
+.paging .num a:hover, .paging .num a:focus, .paging .num a:active { background:#f47725; border:1px solid #f47725; color:#fff; text-decoration:none; }
+.paging .page_btn a, .paging .page_btn a:link, .paging .page_btn a:visited { color:#666; text-decoration:none; }
+.paging .page_btn a:hover, .paging .page_btn a:focus, .paging .page_btn a:active { background:#333; border:1px solid #555; color:#fff; text-decoration:none; }
+
+/* 이전,다음버튼 */
+.paging .page_btn a { display:inline-block; margin:0 3px 0 0; padding:8px 10px; color:#555; border:1px solid #bbb; font-size:11px; font-weight:bold; vertical-align:middle; background:#ddd; }
+.paging .num a.first_child { margin:0 0 0 20px }
+.paging .num a.last_child { margin:0 20px 0 0 }
+
+
+/* ========== [FAQ] ========== */
+.faq_list_wrap { border-top:2px solid #e31837; }
+.faq_list_wrap dl { line-height:1.8em; }
+.faq_list_wrap dl dt { position:relative; padding:8px 0.43em 10px; min-height:31px; border-bottom:1px solid #ccc; cursor:pointer; }
+.faq_list_wrap dl dd { position:relative; padding:8px 0.43em 10px; min-height:31px; border-bottom:1px solid #ccc; display:none; }
+.faq_list_wrap dl.on dt { background:#ececec; cursor:pointer; }
+.faq_list_wrap dl.on dd { display:block; }
+.faq_list_wrap dl span.ico_a,
+.faq_list_wrap dl span.ico_q { position:absolute; top:8px; left:8px; }
+.faq_list_wrap dl dd p , 
+.faq_list_wrap dl dt p { padding:3px 0 0 45px; }

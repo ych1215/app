@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http:\\jakarta.apache.org/log4j/" debug="false">
+    
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %-6p -%13C{1}.%M{%L} %3x | %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="QUERY" class="org.apache.log4j.DailyRollingFileAppender">
+<!--         <param name="file" value="./logs/query.log" /> -->
+        <param name="file" value="/home/tomadm/logs/query.log" />
+        <param name="append" value="true" />
+        <param name="datePattern" value="'.'yyyy-MM-dd"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %-6p -%13C{1}.%M{%L} %3x | %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.StringMatchFilter">
+            <param name="StringToMatch" value="Result"/>
+            <param name="AcceptOnMatch" value="false"/>
+        </filter>
+    </appender>
+    
+    <appender name="FILEAPPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+<!--         <param name="file" value="./logs/admin.log"/> -->
+        <param name="file" value="/home/tomadm/logs/admin.log"/>
+        <param name="append" value="true"/>
+        <param name="datePattern" value="'.'yyyy-MM-dd"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %-6p -%13C{1}.%M{%L} %3x | %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.StringMatchFilter">
+            <param name="StringToMatch" value="Result"/>
+            <param name="AcceptOnMatch" value="false"/>
+        </filter>
+    </appender>
+    
+    <appender name="STATE" class="org.apache.log4j.DailyRollingFileAppender">
+<!--         <param name="file" value="./logs/state.log"/> -->
+        <param name="file" value="/home/tomadm/logs/state.log"/>
+        <param name="append" value="true"/>
+        <param name="datePattern" value="'.'yyyy-MM-dd"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %-6p -%13C{1}.%M{%L} %3x | %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.StringMatchFilter">
+            <param name="StringToMatch" value="Result"/>
+            <param name="AcceptOnMatch" value="false"/>
+        </filter>
+    </appender>
+
+    <logger name="org.springframework.transaction">
+        <level value="INFO" />
+    </logger>
+    
+    <logger name="org.eclipse">
+        <level value="INFO"/>
+    </logger>
+    
+    <logger name="org.apache">
+        <level value="INFO"/>
+    </logger>
+
+    <logger name="com">
+        <level value="INFO" />
+        <appender-ref ref="STATE" />
+    </logger>
+
+    <!-- argument 값을 제외한 순수 SQL문만을 출력 -->
+    <logger name="jdbc.sqlonly" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="QUERY" />
+    </logger>
+
+    <logger name="java.sql.Connection">
+        <level value="INFO" />
+        <appender-ref ref="QUERY" />
+    </logger>
+
+    <logger name="java.sql.Statement">
+        <level value="INFO" />
+        <appender-ref ref="QUERY" />
+    </logger>
+
+    <logger name="java.sql.PreparedStatement">
+        <level value="INFO" />
+        <appender-ref ref="QUERY" />
+    </logger>
+
+    <!-- SQL문과 해당 SQL을 실행시키는데 수행된 시간 정보를 출력 -->
+    <logger name="jdbc.sqltiming" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="QUERY" />
+    </logger>
+
+    <!-- ResultSet을 제외한 모든 JDBC 호출 정보를 출력 -->
+    <!-- 
+    <logger name="jdbc.audit" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILEAPPENDER" />
+    </logger>
+     -->
+
+    <!-- ResultSet을 포함한 모든 JDBC 호출 정보를 출력 -->
+    <!-- 
+    <logger name="jdbc.resultset" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="QUERY" />
+    </logger>
+     -->
+
+    <logger name="log4jdbc.debug" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILEAPPENDER" />
+    </logger>
+
+    <root>
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILEAPPENDER" />
+    </root>
+</log4j:configuration>

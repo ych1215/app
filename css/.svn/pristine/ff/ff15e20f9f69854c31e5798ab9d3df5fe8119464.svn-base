@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://127.0.0.1:9080/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+
+	<!--  로그인 검증  조회  -->
+	<select id="getLogCk" parameterType="map" resultType="String">
+		SELECT 'Y' AS ck
+		  FROM EMP
+		 WHERE EMPNO LIKE '%' || NVL( #{USER_ID, jdbcType=VARCHAR} , '7369')  || '%'   
+	</select>
+
+
+	<select id="getUserInfoMap" parameterType="map" resultType="Map">
+		SELECT  ENAME, JOB, EMPNO 
+		  FROM EMP 
+		 WHERE EMPNO LIKE '%' || NVL( #{USER_ID, jdbcType=VARCHAR} , '7369') || '%'   
+	
+	</select>
+	
+	<select id="getUserInfoList" parameterType="map" resultType="Map">
+		<![CDATA[
+		SELECT  ENAME, JOB, EMPNO 
+		  FROM EMP 
+		 WHERE DEPTNO = (SELECT DEPTNO FROM EMP WHERE EMPNO LIKE '%' || NVL( #{USER_ID, jdbcType=VARCHAR} , '7369')  || '%' )
+		]]>
+	</select>
+	
+	
+	<!-- 회원  등록 -->
+    <update id="setUser" parameterType="Map">
+        /* UserDaoImp.setUser */
+        INSERT INTO EMP (
+		
+               EMPNO
+			 , ENAME
+			 , JOB
+			 , MGR
+			 , HIREDATE
+			 , SAL
+			 , COMM
+			 , DEPTNO
+          )
+          VALUES (
+               #{EMPNO    , jdbcType=VARCHAR}
+             , #{ENAME    , jdbcType=VARCHAR}
+             , #{JOB      , jdbcType=VARCHAR}
+             , #{MGR      , jdbcType=VARCHAR}
+             , SYSDATE
+             , #{SAL      , jdbcType=VARCHAR} 
+             , #{COMM     , jdbcType=VARCHAR}
+             , #{DEPTNO   , jdbcType=VARCHAR}                   
+          )
+    </update>
+    
+	<!-- 회원  수정 -->
+    <update id="upateUser" parameterType="Map">
+        /* UserDaoImp.upateUser */
+        UPDATE EMP
+		   SET ENAME = #{ENAME}
+	     WHERE EMPNO  = #{EMPNO}  
+    </update>
+	
+	
+	<!-- 회원  삭제 -->
+    <update id="delUser" parameterType="Map">
+        /* UserDaoImp.delUser */
+        DELETE FROM EMP
+	     WHERE EMPNO  = #{EMPNO}  
+    </update>
+    
+	
+</mapper>

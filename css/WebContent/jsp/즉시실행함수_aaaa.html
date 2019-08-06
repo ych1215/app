@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script type="text/javascript">
+
+// 이름있는 함수 
+function company() {  
+    alert(1);
+}; 
+company();
+
+// 익명함수 
+var company1 = function() {  
+	 alert(2);
+};
+company1();
+
+
+//즉시실행함수 1번째 방법 , 함수를 괄호로 싼경우 화면이 로딩되면서 함수가 실행 된다
+(function company3() {
+	 alert(3);
+}());
+
+
+// 즉시실행함수2번째 방법 , 표현의 차이 , 위와 같음 , 함수를 괄호로 싼경우 화면이 로딩되면서 함수가 실행 된다
+(function() {
+	 alert(4);
+})();
+
+
+////////////////
+
+
+// 익명함수로 표현 START
+// 즉시실행함수 란  : 함수를 괄호로 싼경우 화면이 로딩되면서 함수가 실행 된다. 아래 경우도 즉시실행함수 이면서 익명함수이다. 자동실행함수이므로 alert("자동실행"); 이 뜬다.  return { 이부분은 함수를 호출해야 실행된다.
+var app = (function() {
+	
+    var privateVar = 'privatexx';
+    var c = "" ;
+    var k = 100;
+    alert("자동실행");
+    
+    var totalBonus = 0;
+    
+    var payBonus = function() {
+        totalBonus = 10 - 3;
+        return totalBonus;
+    };
+    
+    // 리턴으로 객체를 리턴한다. 리턴 객체에서 함수나 변수 를 던질수 잇다.
+    return {
+    	c  :  "ccccccccc" ,
+        prop : privateVar ,
+        k    : 888888 ,
+        payBonusFF : payBonus ,
+        
+        renfin : function(aaa) { 
+            var q =  100;
+            alert(aaa);
+            return q; //   app.renfin("xxxxx") 호출하면  xxxx alert뜨고 100 alert뜬다
+        }
+    };
+    
+}());
+
+alert( app.prop );
+alert( app.c );
+alert( app.prop ) ;
+
+alert( app.payBonusFF  ) ;
+alert( app.payBonusFF() ) ;
+alert( app.renfin("xxxxx") ) ;
+
+// 익명함수로 표현 END
+
+// 익명함수로 표현 과 비슷한대 리턴을 함수로 한경우 .... START
+var app2 = (function() {
+	
+    var privateVar = 'privatexx';
+  
+    alert("자동실행app2");
+    
+    // 리턴으로 객체를 리턴한다. 리턴 객체에서 함수나 변수 를 던질수 잇다.
+    return function(info){
+    	
+    	alert(info + privateVar);
+    };
+    
+}());
+
+app2("리터함수"); // app2()호출하면 alert(info); // 창이 실행됨.
+
+// 익명함수로 표현 과 비슷한대 리턴을 함수로 한경우 .... END
+
+// 함수명이 잇는 함수 , 클로저 STSRT
+function aaaa() {  
+	 
+	 alert("자동실행222");
+	 
+	 var privateVar = 'privatexx';
+	    var c = "" ;
+	    var k = 100;
+	    alert("자동실행222");
+	    
+	    var totalBonus = 0;
+	    
+	    var payBonus = function() {
+	        totalBonus = 10 - 3;
+	        return totalBonus;
+	    };
+	    
+	    // 리턴으로 객체를 리턴한다. 리턴 객체에서 함수나 변수 를 던질수 잇다.
+	    return {
+	    	c  :  "ccccccccc" ,
+	        prop : privateVar ,
+	        k    : 888888 ,
+	        payBonusFF : payBonus ,
+	        
+	        renfin : function() {
+	            var q =  100;
+	            return q;
+	        }
+	    };
+	    
+}; 
+
+alert(  aaaa().k );
+alert(  aaaa().payBonusFF() );
+alert( aaaa().payBonusFF ) ;
+alert( aaaa().renfin() ) ;
+
+// 함수명이 잇는 함수 , 클로저 END
+
+// 이름있는 함수 , 클로저 START
+function zzz() {  
+	 
+    
+	  var totalBonus = 100;
+  
+	    // 리턴으로 객체를 리턴한다. 리턴 객체에서 함수나 변수 를 던질수 잇다.
+	    return {
+	        renfin : function() {
+	            
+	            totalBonus = totalBonus - 3	      ;
+	            return totalBonus;
+	            
+	        }, 
+	        
+	        renfin2 : function() {
+	            
+	            totalBonus = totalBonus - 3	      ;
+	            return totalBonus;
+	            
+	        }
+	    };
+	    
+}; 
+
+var k = zzz(); // 이렇게 하면 변수가 갱신 디며 밑에 처럼 zzz().renfin2() 하면 변수가 갱신되지 않는다
+alert("1:"+  k.renfin() ); // 97
+alert("2:"+ k.renfin2() ) ; // 94
+
+alert("1:"+  zzz().renfin() ); // 97
+alert("2:"+ zzz().renfin2() ) ; // 97
+
+// 이름있는 함수 , 클로저 END 
+
+// 즉시 실행 함수는 변수를 공유한다. 클로저 , 즉시 실행함수  START
+var app4 = (function() {
+	 
+	    
+	  var totalBonus = 100;
+    
+	    // 리턴으로 객체를 리턴한다. 리턴 객체에서 함수나 변수 를 던질수 잇다.
+	    return {
+	        renfin : function() {
+	            
+	            totalBonus = totalBonus - 3	      ;
+	            return totalBonus;
+	            
+	        }, 
+	        
+	        renfin2 : function() {
+	            
+	            totalBonus = totalBonus - 3	      ;
+	            return totalBonus;
+	            
+	        }
+	    };
+	    
+}());
+
+alert( "3:"+app4.renfin() ) ;  // 97
+alert("4:"+ app4.renfin2() ) ; // 94
+// 즉시 실행 함수는 변수를 공유한다. END
+
+
+/* 즉시실행 함수를 이름있는 함수로 만들고 호출하면 에러난다. 익명함수로 만들어야함.
+(function app4() {
+}());
+
+alert( "3:"+app4.renfin() ) ; 
+*/
+
+
+// 클로저 예제 1 START
+function outFunc(name) {
+	var outVar = "my name is ";
+	function innerFunc() {
+  return outVar + name;
+	}
+	return innerFunc;
+}
+
+var result = outFunc("bono");
+alert("result: " + result()); // result: my name is bono
+// 클로저 예제 1 END
+
+
+// 클로저 예제 2 START
+
+
+//클로저 개념 : 함수를 객체화시켜 메모리에 값을 저장함..
+
+
+var out = "out value";
+function outFunc() {
+	var inner = "in value";
+
+	function inFunc(inParam) {
+  console.log("out: " + out);
+  console.log("inner: " + inner);
+  console.log("inParam: " + inParam);
+	}
+
+	return inFunc;
+}
+
+var param = "this is param";
+var outResult = outFunc();
+outResult(param);
+
+// out: out value        // 전역변수
+// inner: in value        // 내부변수
+// inParam: this is param // 파라미터 전달된변수 
+
+// 클로저 예제 2 END
+
+
+// 클로저 다른예제1 START
+var arr = [];
+for(var i = 0; i < 5; i++){
+    arr[i] = (function(id) {    	
+        return function(){
+            return id;
+        }
+    }(i)); // 즉시실행함수로 만들려려고 ()를 사용했음..[ 아래 test 함수 개념... ]   펑션앞에 괄호로 전체 싸도 되고 안싸도 된다. ex : function(id) { ... }(i);
+}
+
+
+for(var index in arr) {
+    console.log(arr[index]()); // 0,1,2,3,4 // arr[index] 이 배열에는 함수가 담겨있고 그걸 ()로 호출한것이다.
+}
+
+
+(function test() {
+	 alert(3);
+}());
+
+// 위처럼 해야 0,1,2,3,4가 찍힌다. 5,5,5,5 가 출력됨.
+var arr = []
+for(var i = 0; i < 5; i++){
+    arr[i] = function(){
+        return i;
+    }
+}
+for(var index in arr) {
+    console.log(arr[index]()); // 5,5,5,5
+}
+
+// 궁금했던거 END
+
+</script>
+
+</head>
+<body>
+
+
+	<div class="put">풋터1</div>
+
+</body>
+</html>

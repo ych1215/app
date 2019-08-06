@@ -1,0 +1,57 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* ========== [태그 초기화] ========== */
+* { margin:0; padding:0; }
+
+html, body { /*min-width:1080px;*/ height:100%; }
+body, input, button, textarea, select { font-size:12px; font-family:"맑은 고딕", Malgun Gothic, "돋움", Dotum, Helvetica, AppleGothic, Sans-serif; color:#111; line-height:1.4em; }
+
+img { border:0; vertical-align:middle; }
+form, fieldset { display:block; border:0; }
+ul, ol { list-style:none; }
+hr { display:none; }
+legend, caption {display:none;}
+
+table { width:100%; border-spacing:0px !important; word-break:break-all; border:none 0;  border-spacing: 0px; /* table-layout:fixed; */}
+p, acronym, address, big, small, cite, code, dfn, em, kbd, pre, samp, sub, sup, tt, var { font-style:normal; }
+h1, h2, h3, h4, h5, h6 { font-size:12px; }
+
+select{ padding:.2em .1em !important; border:1px solid #ccc; font-size:12px; vertical-align:middle; }
+input[type="text"],
+input[type="password"] { height:22px; font-size:12px; border:1px solid #ccc;}
+input[type="checkbox"] { margin:3px; padding:0; width:14px; height:14px; vertical-align:middle; }
+input[type="radio"] { margin:3px; padding:0; width:14px; height:14px; vertical-align:middle; }
+input[type="image"] { margin:0; padding:0; border:none; vertical-align:middle; }
+input[type="file"] { height:22px; padding-top:2px; border:1px solid #ccc; font-size:12px; background:#f5f4eb; vertical-align:middle; }
+input[type="button"] { cursor:pointer; }
+textarea { border:1px solid #ccc; resize: none; vertical-align:top; overflow-x:hidden; overflow-y:auto;}
+
+/* disabled */
+input[disabled], select[disabled], textarea[disabled],
+input[readonly], select[readonly], textarea[readonly] { cursor: not-allowed; color: #111; background-color: #ddd; border:1px solid #bbb; }
+input[type="radio"][disabled], input[type="checkbox"][disabled],
+input[type="radio"][readonly], input[type="checkbox"][readonly] { background-color: #ddd; }
+input[readonly].hasDatepicker, select[readonly].hasDatepicker,
+input[readonly].hasMonthpicker, select[readonly].hasMonthpicker { background-color:#fff; padding:0 0 0 5px; }
+input[readonly].hasDatepicker:disabled,
+input[readonly].hasMonthpicker:disabled { color: #111; background-color: #ddd; border:1px solid #bbb; }
+
+a { cursor:pointer; }
+a:link { color:#333; text-decoration:none; }
+a:visited { color:#666; text-decoration:none; }
+a:hover, a:focus { color:#e31837; text-decoration:none; }
+a:active { color:#e31837; text-decoration:none; }
+
+
+/*hidden*/
+#accessibility,.skipnavi { position: absolute ; width: 0px; height: 0px; font-size: 0px; line-height: 0px; overflow: hidden; visibility: hidden; text-indent: -1000px; }
+ 
+ /* clearfix */
+.clearfix:after { content:"."; display:block; height:0; clear:both; visibility:hidden; }
+ .clearfix { display:inline-block; }
+ /* Hides from IE-mac \*/
+ *html .clearfix {height: 1%;}
+ .clearfix {display: block;}
+ /* End hide from IE-mac */
+ 

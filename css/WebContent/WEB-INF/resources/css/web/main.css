@@ -1,0 +1,47 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* MAIN */
+#contents .main { margin-top:-10px; }
+#contents .main h3 { margin-bottom:10px; color:#666666; background:url("/resources/images/common/bul_h3_main.gif") 2px 4px no-repeat; }
+
+
+/* to do list */
+.todo_table {table-layout:fixed; border-right:1px solid #bbb; border-top:2px solid #999999;}
+.todo_table th,
+.todo_table td {padding:7px 0.23em 5px; color:#333; font-size:12px;  border-left:1px solid #bbb; border-bottom:1px solid #bbb; word-break:break-all;}
+
+.todo_table thead th { background:#eeeeee; }
+.todo_table tbody th { color:#555555; background:#fff; }
+.todo_table tbody th.bg { background:#eeeeee; }
+.todo_table tbody td { text-align:center;}
+
+.todo_table a:link {}
+.todo_table a:hover { color:#f14950; text-decoration:underline; }
+
+/* 공지사항 등 */
+.main .bbswrap { margin-top:30px; }
+.main .bbswrap:after { content:""; display:block; clear:both; }
+.main .leftbbs { float:left; }
+.main .rightbbs { float:right; }
+.main .bbs_type { width:400px; min-height:220px; }
+
+.bbs_table {table-layout:fixed; }
+.bbs_table th,
+.bbs_table td {padding:9px 0.23em 6px; color:#333; font-size:12px; border-bottom:1px solid #bbb; word-break:break-all;}
+
+.bbs_table thead th { border-top:1px solid #e51937; border-bottom:1px solid #666; background:#eee; }
+.bbs_table tbody th { }
+.bbs_table tbody td { text-align:center;}
+
+.bbs_table tbody tr:nth-child(even) th,
+.bbs_table tbody tr:nth-child(even) td { background:#fff;}
+.bbs_table tbody td.subject { padding-left:10px; color:#111; text-align:left; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.bbs_table tbody td.subject a { color:#111; }
+.bbs_table tbody td.subject a:hover, a:focus, a:active { color:#e31837; text-decoration:none; }
+.bbs_table .notice { color:#e31837; font-weight:bold; }
+
+.leftbbs { position:relative; }
+.leftbbs p.more { position:absolute; top:3px; right:0; font-size:11px; color:#666; font-weight:bold; }
+.rightbbs { position:relative; }
+.rightbbs p.more { position:absolute; top:3px; right:0; font-size:11px; color:#666; font-weight:bold; }

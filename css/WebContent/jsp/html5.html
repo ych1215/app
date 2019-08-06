@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<script src="http://code.jquery.com/jquery-1.9.0.js"></script>
+
+
+<script type="text/javascript">
+
+$(function(){
+	
+	//alert();
+	
+});
+
+
+</script>
+
+
+<style type="text/css">
+body {
+	font-size: 12px;
+	width: 1200px;
+}
+
+ul {
+	padding-left: 10px;
+}
+
+li {
+	list-style: none;
+}
+
+.wraper {<!--
+	text-align: center;
+	-->
+}
+
+.navigation {
+	float: left;
+	width: 100px;
+	background-color: red;
+	color: white;
+	height: 700px;
+}
+
+.hdead {
+	height: 70px;
+	background-color: yellow;
+	text-align: center;
+	position: relative;
+}
+
+.main_menu li {
+	width: 100px;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.hdead2 {
+	display: inline-block;
+	color: white;
+	height: 50px;
+	background-color: purple;
+	text-align: center;
+}
+
+.loging_info {
+	background-color: white;
+	height: 50px;
+	width: 50px;
+	position: absolute;
+	top: 15px;
+	left: 15px;
+}
+
+.loging_info2 {
+	background-color: white;
+	height: 50px;
+	width: 50px;
+	position: absolute;
+	/* absolute 를 사용하려면 부모가  relative 이어야 한다. 부모에 relative 안주면 모니터 0.0에서 죄표 시작함 */
+	top: 15px;
+	left: 1000px;
+}
+
+.footer {
+	clear: both;
+	background-color: purple;
+	height: 50px;
+	color: white;
+}
+
+.content {
+	float: left;
+	width: 1100px;
+	height: 700px;
+	background-color: green;
+	color: white;
+	position: relative;
+}
+
+.content1 {
+	color: yellow;
+	background-color: purple;
+	height: 150px;
+	width: 150px;
+	position: absolute;
+	top: 15px;
+	left: 15px;
+	overflow: auto;
+}
+
+.content2 {
+	color: yellow;
+	background-color: purple;
+	height: 150px;
+	width: 150px;
+	position: absolute;
+	/* absolute 주면 부모 좌표에서 움직이므로  content1 과 동일위치에 가서 겹쳐 보임 */
+	top: 15px;
+	left: 170px;
+}
+.content3 {
+	color: yellow;
+	background-color: purple;
+	height: 150px;
+	width: 150px;
+	position: absolute;
+	/* absolute 주면 부모 좌표에서 움직이므로  content1 과 동일위치에 가서 겹쳐 보임 */
+	top: 15px;
+	left: 325px; 
+}
+
+
+</style>
+
+
+</head>
+<body>
+	<div class="wraper">
+
+		<div class="hdead">
+
+			<div class="loging_info">1111</div>
+
+
+			<div class="loging_info2">222</div>
+
+
+
+			<div class="hdead2">
+				<ul class="main_menu">
+					<li>거래처</li>
+					<li>임업</li>
+					<li>농업</li>
+					<li>어업</li>
+				</ul>
+			</div>
+		</div>
+
+
+		<div class="navigation">
+			<ul>
+				<li>생활코딩이란?</li>
+				<li>커리큘럼</li>
+				<li>커뮤니티</li>
+				<li>강의장소협찬</li>
+				<li>수업요청</li>
+
+			</ul>
+		</div>
+		<div class="content">
+			<div class="content1">1111asdfasdfasdfasfasfsdfsadfㅁㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㄹㅇㅁㄴㅇㄹㄴdfasdfasdfasfasfsdfsadfㅁㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㄹㅇㅁㄴㅇㄹㄴㅁdfasdfasdfasfasfsdfsadfㅁㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㄹㅇㅁㄴㅇㄹㄴㅁㅁㅇㄹ</div>
+			<div class="content2">2222</div>
+			<div class="content3">3333</div>
+
+		</div>
+
+		<div class="footer">Footer</div>
+	</div>
+</body>
+</html>
+

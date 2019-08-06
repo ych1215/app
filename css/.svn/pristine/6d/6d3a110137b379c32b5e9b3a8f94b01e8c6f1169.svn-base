@@ -1,0 +1,17 @@
+
+#[DEV Server] - log4sql
+#log4sql : Oracle
+jdbc.driver=core.log.jdbc.driver.OracleDriver
+jdbc.url=jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = 127.0.0.1)(PORT = 1521)))(CONNECT_DATA =(SERVICE_NAME = ORCL)))
+jdbc.username=c##scott
+jdbc.password=tiger
+
+
+jdbc.min.size=5
+jdbc.min.idle=2
+jdbc.max.size=30
+jdbc.max.idle=10
+jdbc.max.wait=1800000
+jdbc.testWhileIdle=true
+jdbc.timeBetweenEvictionRunsMillis=600000
+jdbc.validationQuery=SELECT * FROM dual
