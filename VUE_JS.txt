@@ -1,0 +1,3359 @@
+==================================
+뷰 2019.08.09 `<div>foo</div>`
+==================================
+
+
+==================================
+1. node js 설치 : 
+   1.1 https://nodejs.org/en/
+   1.2 안정적인 왼쪽서 10.16.2. LST 다운 설치.
+   1.3 콘솔에서 node -v 하면 버전 나옴. 나오면 제대로 된것.
+   
+2. vue cli 설치 
+   콜솔에서명령어입력 : npm install vue-cli -global
+   C:\Users\ych1215\AppData\Roaming\npm\node_modules\vue-cli 여기에 생성됨.
+   
+3. 웹팩으로 플로젝트 생성
+   C:\vue_webpak_test 에 폴더 생성후 cmd로 해당 폴더 이동.
+   
+   C:\>cd C:\vue_webpak_test
+
+   C:\vue_webpak_test>vue init simple          -- 옵션이 여러개인대 html 한개만 만들때. 옵션은 6가지
+                                                   vue init webpack : 웹팩으로 만들고 구성방식,태스팅,문법검사 등..
+												   vue init webpack-simple : 웹팩최소기능으로 생성.
+												   vue init simple : 단순한 vue가있는 html 1개 생성됨.
+   ///////////////
+   
+   -- 1.플젝 생성 명령어 
+   C:\vue_webpak_test>vue init webpack-simple
+   
+   ? Generate project in current directory? y <-- 해당 폴더에 생성할거냐
+   ? Project name test <-- 플젝명
+   ? Project description test_desc <-- 플젝내용
+   ? Author ych  <-- 플젝 만드는사람
+   ? License MIT <-- 그냥 MIT 라고하면됨.
+   ? Use sass? No <-- CSS 확장된 CSS 언어 설치할거냐 N으로 
+   
+      vue-cli · Generated "vue_webpak_test".
+   
+      To get started:
+   
+        npm install
+        npm run dev
+   
+   
+   
+   -- 2.웹팩 등 유틸 설치
+   C:\vue_webpak_test> npm install -- 필요한 여러가지 툴설치
+   
+   -- 3.실행하기 
+   C:\vue_webpak_test> npm run dev -- 생성된 플젝 실행
+
+==================================
+
+-- 아톰설치
+   인터넷에서 아톰설치 검색해서 설치하고 
+   셋팅에서 테마와 에디터 검은색으로 변경가능하며
+   더블클릭시 동일한 문자 표시 하려면 하이라이트로 검색해서 설치.
+   
+-- 크로브라우저 vue.js 플로그인 설치.
+   구글에서 vue-devtools 검색해서 설치.
+   
+-- 아톰 창 분활 
+   파일 오른쪽 마우스 split+left
+
+-- 메시지 출력
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+  <head>
+    <title>Vue Sample</title>
+  </head>
+  <body>
+    <div id="app">
+      {{ message }}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          message: 'Hello Vue.js!'
+        },
+
+      });
+    </script>
+  </body>
+</html>
+
+
+
+
+-- date를 객체로 사용하기.
+   콘솔에서 model.message = "afadf"; 하면 값이 바뀐다.
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+  <title>Welcome to Vue</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+
+  <div id="simple">
+    <h2>{{message}}</h2>
+  </div>
+
+  <script type="text/javascript">
+
+  //모델(Model) 객체 => 데이터를 가지고 있음
+    var model = {
+      message : '첫번째 Vue.js Sample'
+    };
+  //simple객체 : Vue 객체이자 뷰모델(ViewModel) 객체
+    var simple = new Vue({
+      el : '#simple', //HTML요소(Element)
+      data : model // => 모델 객체를 참조함
+
+    }) // => HTML 요소와 데이터를 참조하고 있음
+
+  </script>
+</body>
+</html>
+
+
+
+
+-- 라이프싸이클
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>Vue Instance Lifecycle</title>
+  </head>
+  <body>
+    <div id="app">
+      {{ message }}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+       var cnt = 0;
+       var cnt1 = 0;
+
+       var obj = new Vue({
+        el: '#app',
+        data: {
+          message: '000000000'
+        },
+
+        beforeCreate: function() {
+          // data, 함수 , 돔 에 접근할수 없음.
+          console.log("beforeCreate 값:"+this.message);// 값:undefined
+        },
+
+        created: function() {
+          // data, 함수 , 돔 에 접근할수 있음.
+          // 단 템플릿 속성에 정의된 엘리먼트는 접근할수 없음.
+          console.log("created 값:"+this.message);  // 값:000000000
+
+        },
+
+        beforeMount: function() {
+          // 돔이 화면에 그려지기전에 호출됨 , 데이터 값 변경 로직을 넣게 좋음.
+          console.log("beforeMount 값:"+this.message); // 값:000000000
+          //this.message = "111111111111"; // !!!!!! mounted 되기전이므로 데이터 값을 바꿔도 beforeUpdate , updated 이벤트 일어나지 않음.
+        },
+
+        mounted: function() {
+          // 돔이 그려지고 나서 호출되므로 로직 넣기 좋은 단계.
+          // 단 현재의 돔만 mounted 하면 일어난다. 하위에 있는 돔이나 인쿠르드한 돔이 생성되기전에도 이벤트가 일어나므로 모든 돔이 안료된후 처리를해야 한다면 주의필요.
+          console.log("mounted 값:"+this.message); // 000000000
+          this.message = "111111111"; // 데이터 값 바꾸면 beforeUpdate , updated 이벤트 일어남. 즉 mounted 되고 나서 값을 바꿔야 beforeUpdate,updated 일어남.
+        },
+
+        beforeUpdate: function() {
+          cnt++;
+          // 데이터 변경시 돔이 변경되기전에 이벤트 발생. 돔 변경되기전에 로직을 넣기에 좋음
+
+          /*
+            헷갈리지 말자 ...
+            돔이 변경되기전 beforeUpdate 이벤트가 발생하는거지
+            데이터를 변경했다고해서 변경전 데이터를 가지고 있는것은 아니다. 데이터는 이미변경된 상태이다. 돔 변경전 일어나는 이벤트임.
+          */
+          console.log(cnt+"_beforeUpdate 값:"+this.message); // 111111111
+        } ,
+
+        updated: function() {
+          cnt1++;
+          // 돔이 변경처리 완료 되면 일어난다. 변경후 제어로직 넣기 좋음.
+          console.log(cnt1+"_updated 값:" + this.message );
+        }
+
+      });
+
+      //obj._data.message = '5555555555';
+
+    </script>
+  </body>
+</html>
+
+
+-- 라이프싸이클2, 데이터에 객체 사용하기.
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>Vue Instance Lifecycle</title>
+  </head>
+  <body>
+    <div id="app">
+      {{ info.no }}  <br> {{ info.name }}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+
+    var model = {
+       no   : '000000000' ,
+       name : '홍길동'
+     };
+
+       var cnt = 0;
+       var cnt1 = 0;
+
+       var obj = new Vue({
+        el: '#app',
+        data: {
+          info : model
+        },
+
+        beforeCreate: function() {
+          // data, 함수 , 돔 에 접근할수 없음.
+          console.log("beforeCreate");
+
+          //console.log("beforeCreate 값:"+this.info.no);// 오류
+          //console.log("beforeCreate 값:"+this.info.name);// 오류
+        },
+
+        created: function() {
+          // data, 함수 , 돔 에 접근할수 있음.
+          // 단 템플릿 속성에 정의된 엘리먼트는 접근할수 없음.
+          console.log("created 값:"+this.info.no);  // 값:000000000
+          console.log("created 값:"+this.info.name);  // 값:홍길동
+
+        },
+
+        beforeMount: function() {
+          // 돔이 화면에 그려지기전에 호출됨 , 데이터 값 변경 로직을 넣게 좋음.
+          console.log("beforeMount 값:"+this.info.no); // 값:000000000
+          console.log("beforeMount 값:"+this.info.name); // 값:홍길동
+
+          //this.info.name = "강감찬"; // !!!!!! mounted 되기전이므로 데이터 값을 바꿔도 beforeUpdate , updated 이벤트 일어나지 않음., 데이터는 변경됨.
+        },
+
+        mounted: function() {
+          // 돔이 그려지고 나서 호출되므로 로직 넣기 좋은 단계.
+          // 단 현재의 돔만 mounted 하면 일어난다. 하위에 있는 돔이나 인쿠르드한 돔이 생성되기전에도 이벤트가 일어나므로 모든 돔이 안료된후 처리를해야 한다면 주의필요.
+          console.log("mounted 값:"+this.info.no); // 000000000
+          console.log("mounted 값:"+this.info.name); // 홍길동
+
+          this.info.name = "일지매"; // 데이터 값 바꾸면 beforeUpdate , updated 이벤트 일어남. 즉 mounted 되고 나서 값을 바꿔야 beforeUpdate,updated 일어남.
+          this.info.no = "11111111";
+        },
+
+        beforeUpdate: function() {
+          cnt++;
+          // 데이터 변경시 돔이 변경되기전에 이벤트 발생. 돔 변경되기전에 로직을 넣기에 좋음
+
+          /*
+            헷갈리지 말자 ...
+            돔이 변경되기전 beforeUpdate 이벤트가 발생하는거지
+            데이터를 변경했다고해서 변경전 데이터를 가지고 있는것은 아니다. 데이터는 이미변경된 상태이다. 돔 변경전 일어나는 이벤트임.
+
+            // 콘솔에서 model.name = "옥수수"; 해도 beforeUpdate 이벤트 발생함
+
+
+          */
+          console.log(cnt+"_beforeUpdate 값:"+this.info.no); // 11111111
+          console.log(cnt+"_beforeUpdate 값:"+this.info.name); // 일지매
+        } ,
+
+        updated: function() {
+          cnt1++;
+          // 돔이 변경처리 완료 되면 일어난다. 변경후 제어로직 넣기 좋음.
+          console.log(cnt1+"_updated 값:" +this.info.no ); // 11111111
+          console.log(cnt1+"_updated 값:" +this.info.name ); // 일지매
+        } ,
+
+        beforeDestroy: function() {
+          // 이상태에서도 값 접근 가능
+          console.log("beforeDestroy");
+        } ,
+
+        destroyed: function() {
+        // 값 접근 불가
+          console.log("destroyed");
+        }
+
+      });
+
+
+    Vue.delete( 'target', "" );
+
+
+
+    </script>
+  </body>
+</html>
+
+
+-- 전역컴포넌트 등록 , 컴퍼넌트 정의된곳이 new Vue 밖에 있음.
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>Vue Component Registration</title>
+  </head>
+  <body>
+    <div id="app">
+      <button>컴포넌트 등록</button>
+			<my-component></my-component>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+
+      Vue.component('my-component', {
+        template: '<div>전역 컴포넌트가 등록되었습니다!{{ cmp1Data }}</div>',
+        data: function() { // 값은 함수로 해야함.
+         return {
+           cmp1Data : 100
+         }
+       }
+      });
+
+      new Vue({
+        el: '#app'
+      });
+    </script>
+  </body>
+</html>
+
+
+-- 지역컴포넌트  , 컴퍼넌트 정의된곳이 new Vue 안에 있음.
+
+<html>
+<head>
+<meta charset="utf-8">
+    <title>Vue Component Registration</title>
+  </head>
+  <body>
+    <div id="app">
+      <button>컴포넌트 등록</button>
+      <my-local-component></my-local-component>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+
+      var cmp = {
+        // 컴포넌트 내용
+        template: '<div>지역 컴포넌트가 등록되었습니다!{{ cmp1Data }}</div>' ,
+        data: function() { // 값은 함수로 해야함.
+         return {
+           cmp1Data : 100
+         }
+}
+      };
+
+      new Vue({
+        el: '#app',
+        components: {
+          'my-local-component': cmp
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+
+-- 지역컴포넌트 여려개 등록
+
+<html>
+<head>
+<meta charset="utf-8">
+    <title>Vue Component Scope</title>
+  </head>
+  <body>
+    <div id="app">
+      <my-component1></my-component1>
+      <my-component2></my-component2>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+      // 첫 번째 컴포넌트 내용
+      var cmp1 = {
+        template: '<div>첫 번째 지역 컴포넌트 : {{ cmp1Data }}</div>',
+        data: function() {
+          return {
+            cmp1Data : 100
+          }
+        }
+      };
+
+      // 두 번째 컴포넌트 내용
+      var cmp2 = {
+        template: '<div>두 번째 지역 컴포넌트 : {{ cmp2Data }}</div>',
+        data: function() {
+          return {
+            cmp2Data : 1111
+          }
+        }
+      };
+
+      new Vue({
+        el: '#app',
+        // 지역 컴포넌트 등록
+        components: {
+          'my-component1': cmp1,
+          'my-component2': cmp2
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+
+-- 전역, 지역 컴퍼넌트 같이 사용.
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>Vue Local and Global Components</title>
+  </head>
+  <body>
+    <div id="app">
+      <h3>첫 번째 인스턴스 영역</h3>
+      <my-global-component></my-global-component>
+      <my-local-component></my-local-component>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+      // 전역 컴포넌트 등록
+      Vue.component('my-global-component', {
+        template: '<div>전역 컴포넌트 입니다.</div>'
+      });
+
+      // 지역 컴포넌트 내용
+      var cmp = {
+        template: '<div>지역 컴포넌트 입니다.</div>'
+      };
+
+      new Vue({
+        el: '#app',
+        // 지역 컴포넌트 등록
+        components: {
+          'my-local-component': cmp
+        }
+      });
+    </script>
+  </body>
+</html>
+
+-- 전역, 지역 컴퍼넌트 범위
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>Vue Local and Global Components</title>
+  </head>
+  <body>
+    <div id="app">
+      <h3>첫 번째 인스턴스 영역</h3>
+      <my-global-component></my-global-component>
+      <my-local-component></my-local-component>
+    </div>
+    <hr>
+    <div id="app2">
+      <h3>두 번째 인스턴스 영역</h3>
+      <my-global-component></my-global-component>
+      <my-local-component></my-local-component>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+      // 전역 컴포넌트 등록
+      Vue.component('my-global-component', {
+        template: '<div>전역 컴포넌트 입니다.</div>'
+      });
+
+      // 지역 컴포넌트 내용
+      var cmp = {
+        template: '<div>지역 컴포넌트 입니다.</div>'
+      };
+
+      new Vue({
+        el: '#app',
+        // 지역 컴포넌트 등록
+        components: {
+          'my-local-component': cmp
+        }
+      });
+
+      // 두 번째 인스턴스
+      new Vue({
+        el: '#app2',
+        // 지역 컴포넌트 등록
+        /* // 전역컴포넌트는 객체 밖에 있으므로 #app2 에서 재 사용 가능하지만 지역 객체는 범위가 #app2 객에 안에서 범위를 지정하므로 아래처럼 components 재 등록해야함.
+        components: {
+          'my-local-component': cmp
+        }
+        */
+
+        // 지역 컴포넌트 등록
+        // 지역 컴포넌트는 매번 등록해줘야함.
+        components: {
+          'my-local-component': cmp
+        }
+
+      });
+    </script>
+  </body>
+</html>
+
+-- 컴포넌트 끼리 데이터 참조 ( props 사용하는게 좋음  ), 책에서는 직접은 안된다고 햇는대 해보니깐 됨;;??
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>Vue Component Scope</title>
+  </head>
+  <body>
+    <div id="app">
+      <my-component1></my-component1>
+      <my-component2></my-component2>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+
+     var aa =  100333;
+      // 첫 번째 컴포넌트 내용
+      var cmp1 = {
+        template: '<div>첫 번째 지역 컴포넌트 : {{ cmp1Data }}</div>',
+        data: function() {
+          return {
+            cmp1Data : 100
+          }
+        }
+      };
+
+      // 두 번째 컴포넌트 내용
+      var cmp2 = {
+        template: '<div>두 번째 지역 컴포넌트 : {{ cmp2Data }}</div>',
+        data: function() {
+          return {
+            cmp2Data : cmp1.data().cmp1Data
+          }
+        }
+      };
+
+      new Vue({
+        el: '#app',
+        // 지역 컴포넌트 등록
+        components: {
+          'my-component1': cmp1,
+          'my-component2': cmp2
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- 전역컴포넌트 에 props 속성 이용하여 data 전달하기 
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <meta charset="utf-8">
+  </head>
+  <body>
+
+    <div id="app">
+      <child-component v-bind:propsdata="message"></child-component>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+
+    <script>
+
+      Vue.component('child-component', {
+        props: ['propsdata'],
+        template: '<p>{{ propsdata }}</p>',
+      });
+
+      new Vue({
+        el: '#app',
+        data: {
+          message: '11111111111'
+        }
+      });
+    </script>
+  </body>
+</html>
+
+-- 부모값을 자식에게 전달하기
+   전역컴포넌트 에 props 속성 이용하여 data 전달하기 (객체사용)
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+  </head>
+  <body>
+
+    <div id="app">
+      <child-component v-bind:propsdata="info"></child-component>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+
+    <script>
+
+    var model = {
+       no   : '000000000' ,
+       name : '홍길동2'
+     };
+
+      Vue.component('child-component', {
+        props: ['propsdata'],
+        template: '<p>{{ propsdata.name }} {{ propsdata.no }} </p> ',
+      });
+
+      new Vue({
+        el: '#app',
+        data: {
+         info : model
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- 자식에서 부모 컴퍼넌트 이벤트 발생시키기
+   이벤트 발생시키기  ;; 쓰잘때기 없는거 같음.
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+
+    <div id="app">
+      <child-component v-on:show-log="printText"></child-component>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+
+    <script>
+      Vue.component('child-component', {
+        template: '<button v-on:click="showLog">show</button>',
+        methods: {
+          showLog: function() {
+            this.$emit('show-log');
+          }
+        }
+      });
+
+      new Vue({
+        el: '#app',
+        data: {
+          message: 'Hello Vue! passed from Parent Component'
+        },
+        methods: {
+          printText: function() {
+            console.log("received an event");
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+
+-- 컴퍼넌트 (부모값을 자식으로 전달 )
+  데이터를  var model = {} 이렇게 빼면 자식에서 부모접근시 $emit 이렇게 할필요없음.
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+  </head>
+  <body>
+    <form name="frm">
+
+    <div id="app">
+      <child-component v-bind:propsdata="info"></child-component>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+
+    <script>
+
+    var model = {
+       no      : '127' ,
+       name    : '홍길동',
+       btnName : '사번에 2 곱하기(부모값변경)'
+     };
+
+      Vue.component('child-component', {
+
+        props: ['propsdata'],
+
+        template: `<div>이름:{{ propsdata.name }} 사번:{{ propsdata.no }}
+                    <div>
+                        <input type="number" min="1" max="99999999999" v-model="propsdata.no" name="ggg" value= "" />
+                        <button id="btnAdd" v-on:click="showLog" > {{ propsdata.btnName }} </button>
+                    </div>
+                  </div>
+                  ` ,
+
+        methods: {
+            showLog: function(event) {
+               event.preventDefault();
+               alert("자식컴퍼넌트:자식_폼값:"+frm.ggg.value);
+               model.no = frm.ggg.value * 2;
+            }
+        }
+
+      });
+
+      new Vue({
+        el: '#app',
+        data: {
+                info : model
+              }
+      });
+    </script>
+  </body>
+
+</form>
+</html>
+
+
+
+-- 부모, 자식 둘다 사용 , ych1215
+
+   * 상위, 하위 컴퍼넌트란 HTML 노드의 트리구조에서 부모노드,자식노드 컴퍼넌트의 관계
+     가 부모,자식으로 이루어진 관계를 이다.
+	 <div id='a'> <child-component ..  </div> 이렇게 등록하며 
+	 등록된 컴퍼넌트(전역,지역 모두해당) 는 자연스럽게 하위컴퍼넌트가 되고 
+	 그 하위컴퍼넌트를 등록한 인스턴스는 부모컴포넌트가 된다.
+   
+   * 자식컴퍼넌트 가 부모 컴포넌트 값을 사용시 propsdata 이용하여 접근 하며
+     자식컴퍼넌트 의 값을 부모컴포넌트로 보내려면 click 등 
+	 이벤트를 발생시켜 $emit을 이용하여 부모의 함수에 접근하여 값을 전달한다.
+	 
+   * 자식에서 부모의 함수를 호출하기.
+     1. v-on:click="showLog" -> 자식의 showLog 함수호출 , 자식함수안에 this.$emit('show-log' ==> <child-component v-on:show-log="printText"> ==> 부모함수 호출 
+		
+		
+   * 주의!! 만약 <child-component v-bind:propsdata-aa="story" propsdata-aa 카멜케이스(-붙이고소문자)면 
+     props 에는 케밥케이스(propsdataAa)로 해야 한다. 룰이다.
+	 
+   * 컴퍼넌트가 많이지면 복잡하므로 버스 를 이용한다. 버스도 복잡해지므로 vuex 이용.
+   
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+  </head>
+  <body>
+    <form name="frm">
+
+    <div id="app">
+      <child-component v-bind:propsdata="story" v-on:show-log="printText"></child-component>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+
+    <script>
+
+      Vue.component('child-component', {
+
+        props: ['propsdata'],
+
+        template: `<div>이름:{{ propsdata.name }} 사번:{{ propsdata.no }}
+                    <div>
+                        <input type="number" min="1" max="99999999999" v-model="propsdata.no" name="empNo" value= "" />
+                        <button id="" v-on:click="showLog"> {{ propsdata.btnName }} </button>
+                    </div>
+                  </div>
+                  ` ,
+
+        props: ['propsdata'],
+
+        methods: {
+            showLog: function(event, val) {
+               event.preventDefault();
+               alert("자식컴퍼넌트:자식_폼값:"+frm.empNo.value);
+               this.$emit('show-log', frm.empNo.value);
+            }
+        }
+
+      });
+
+      new Vue({
+        el: '#app',
+
+        data: {
+                story: {
+                        no      : '127' ,
+                        name    : '홍길동',
+                        btnName : '사번에 2 곱하기(부모값변경)'
+                       }
+        },
+
+        methods: {
+            printText: function (val) {
+                          alert("부모컴포넌트:자식에서_전달받은_파라미터:" + val);
+                          alert("부모컴포넌트:부모에서_폼에있는_값접근:"   + frm.empNo.value);
+                          this.story.no = this.story.no * 2 ;
+                       }
+        }
+
+      });
+    </script>
+  </body>
+
+</form>
+</html>
+
+
+
+-- 콤퍼넌트간통신 , 버스 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+
+    <div id="app">
+      <child-component></child-component>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+
+    <script>
+
+      var eventBus = new Vue();
+
+      Vue.component('child-component', {
+        template: '<div>하위 컴포넌트 영역입니다.<button v-on:click="showLog">show</button></div>',
+        methods: {
+          showLog: function() {
+            eventBus.$emit('triggerEventBus', 100);
+          }
+        }
+      });
+
+      var app = new Vue({
+        el: '#app',
+        created: function() {
+          eventBus.$on('triggerEventBus', function(value){
+            console.log("이벤트를 전달 받음. 전달 받은 값 : ", value);
+          });
+        }
+      });
+      
+    </script>
+  </body>
+</html>
+
+###############################################
+# input 태그
+###############################################
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <label>
+        input[type=text]:<br>
+        <input type="text" v-model="textMessage">
+        <p>{{ textMessage }}</p>
+      </label>
+
+      <hr>
+
+      <label>
+        textarea:<br>
+        <textarea v-model="textareaMessage"></textarea>
+        <p style="white-space: pre">{{ textareaMessage }}</p>
+      </label>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          textMessage: 'Hello, Vue!!',
+          textareaMessage: 'Hello,\nVue!'
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+###############################################
+# 디렉티브
+###############################################
+
+
+-- input 박스와 바인딩 
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+  <head>
+    <title>Vue Sample</title>
+  </head>
+  <body>
+    <div id="app">
+      {{ message }}
+      <input v-model="message" type="text" name="" value="">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          message: 'Hello Vue.js!'
+        },
+       updated: function() {
+
+         // 돔이 변경처리 완료 되면 일어난다. 변경후 제어로직 넣기 좋음.
+         console.log("_updated 값:" + this.message );
+       }
+
+      });
+    </script>
+  </body>
+</html>
+
+-- v-bind
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <a v-bind:href="naverLink">네이버 링크</a><br>
+      <a v-bind:href="githubLink">깃허브 링크</a>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          naverLink: 'http://www.naver.com/',
+          githubLink: 'https://github.com/'
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- v-show
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+
+<div id="app" >
+
+    <textarea v-model="message"></textarea>
+    <br>
+    <button v-show="message">
+      v-show
+    </button>
+    <pre>{{ $data }}</pre>
+</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+             message: 'v-show'
+        }
+    })
+</script>
+</html>
+
+-- v-show
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+
+  <body>
+    <div id="app">
+      <span v-show="isShow">보이나요?</span>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          isShow: false
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- v-if
+
+  ! message 이렇게 역 조건도 줄수 있음
+  태그 template 은 div 같은거쓰면 html 생기므로 태그 필요없을때 template 사용하면 랜더링 안되서 유요한 방법임
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <div id="app">
+    <template v-if="message"> 
+      <h1>v-if1</h1>
+	  <h1>v-if2</h1>
+	  <h1>v-if3</h1>
+  </template> 
+
+    <textarea v-model="message"></textarea>
+
+  </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    message: 'v-if'
+  }
+})
+</script>
+</html>
+
+-- v-if
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+
+
+  <body>
+    <div id="app">
+      <span v-if="isShow">보여지나요?</span>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          isShow: true
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+
+
+-- v-else
+
+   v-show 와 v-if 차이는 show는 디스플레이히든으로 숨기고 if는 아예 랜더링하지 않으므로 html태그에 안보임.
+   서버에서 데이터를 가져와서 숨겻다 보옂다 하려면 show로 하는게 효과적임.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <div id="app">
+    <div v-if="message">
+      <h1>v-if1</h1>
+    </div>
+
+    <div v-else="message">
+      <h1>v-else</h1>
+    </div>
+
+    <textarea v-model="message"></textarea>
+
+  </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    message: 'v-if'
+  }
+})
+</script>
+</html>
+
+-- v-else-if
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+
+  <body>
+    <div id="app">
+      <span v-if="alphabet == 'A'">A입니다</span>
+      <span v-else-if="alphabet == 'B'">B입니다</span>
+      <span v-else>그 외 나머지 입니다.</span>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          alphabet: 'D'
+        }
+      });
+    </script>
+  </body>
+</html>
+
+-- template v-if , if else if 는 1개씩 되지만 이건 html 여러개 가능.
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+
+  <body>
+    <div id="app">
+      <template v-if="soldOut">
+        <h1>품절</h1>
+        <p>대기 버튼을 누르시면 재고가 들어올 경우 푸시를 통해 알려드립니다.</p>
+        <button>대기</button>
+      </template>
+      <template v-else>
+        <h1>판매 중</h1>
+        <p>10,000원</p>
+        <button>구매하기</button>
+      </template>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          soldOut: true
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- v-for
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+    <div class="container">
+        구구단 5단
+        <ul class="list-group">
+            <li v-for="i in 10" class="list-group-item">
+               5 * {{ i }} =  {{ i * 5 }}
+            </li>
+        </ul>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+    new Vue({
+        el: '.container'
+    })
+</script>
+</html>
+
+-- v-for
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="index in 100">
+          {{ index }}
+        </li>
+      </ul>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app'
+      });
+    </script>
+  </body>
+</html>
+
+-- v-for
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="number in numbers">
+          {{ number }}
+        </li>
+      </ul>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          numbers: [1, 1, 2, 3, 5, 8, 13, 21]
+        }
+      });
+    </script>
+  </body>
+</html>
+
+-- v-for , 인덱스값 알기.
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="(number, index) in numbers">
+          {{ index }}: {{ number }}
+        </li>
+      </ul>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          numbers: [1, 1, 2, 3, 5, 8, 13, 21]
+        }
+      });
+    </script>
+  </body>
+</html>
+
+-- v-for , 오브잭트도 for 사용가능.
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="item in object">
+          {{ item }}
+        </li>
+      </ul>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          object: {
+            firstName: 'Lee',
+            lastName: 'Sun-Hyoup',
+            age: 24
+          }
+        }
+      });
+    </script>
+  </body>
+
+-- v-for , 키값알기.
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="(item, key) in object">
+          {{ key }}: {{ item }}
+        </li>
+      </ul>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          object: {
+            firstName: 'Lee',
+            lastName: 'Sun-Hyoup',
+            age: 24
+          }
+        }
+      });
+    </script>
+  </body>
+  
+-- template v-for , 태그1개씩되지만 , 템플릿은 여러개 가능.
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <template v-for="(item, key) in object">
+        <h1>{{ key }}</h1>
+        <p>{{ item }}</p>
+      </template>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          object: {
+            firstName: 'Lee',
+            lastName: 'Sun-Hyoup',
+            age: 24
+          }
+        }
+      });
+    </script>
+  </body>
+
+-- v-for , v-if 같이 사용하기.
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <h2>성공!</h2>
+      <ul>
+        <li v-for="todo in todos" v-if="todo.isComplete">
+          {{ todo.contents }}
+        </li>
+      </ul>
+
+      <h2>아직...</h2>
+      <ul>
+        <li v-for="todo in todos" v-if="!todo.isComplete">
+          {{ todo.contents }}
+        </li>
+      </ul>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          todos: [{
+            contents: 'Vue.js 정복하기!',
+            isComplete: true
+          }, {
+            contents: 'JavaScript 정복하기!',
+            isComplete: false
+          }, {
+            contents: '시장에서 장보기',
+            isComplete: false
+          }]
+        }
+      });
+    </script>
+  </body>
+</html>
+
+-- v-for , v-if 같이 사용하기.
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>ToDo List!</h1>
+      <template v-if="isVisibility">
+        <h2>성공!</h2>
+        <ul>
+          <li v-for="todo in todos" v-if="todo.isComplete">
+            {{ todo.contents }}
+          </li>
+        </ul>
+
+        <h2>아직...</h2>
+        <ul>
+          <li v-for="todo in todos" v-if="!todo.isComplete">
+            {{ todo.contents }}
+          </li>
+        </ul>
+      </template>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          isVisibility: false,
+          todos: [{
+            contents: 'Vue.js 정복하기!',
+            isComplete: true
+          }, {
+            contents: 'JavaScript 정복하기!',
+            isComplete: false
+          }, {
+            contents: '시장에서 장보기',
+            isComplete: false
+          }]
+        }
+      });
+    </script>
+  </body>
+</html>
+
+  
+-- v-for (데이터사용하기)
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+    <div class="container">
+        구구단 5단
+        <ul class="list-group">
+            <li v-for="i in 10" >
+                {{dan}} * {{ i }} =   {{ i * dan }}
+            </li>
+        </ul>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+    new Vue({
+        el: '.container' ,
+        data: {
+          dan: '5'
+        }
+    })
+</script>
+</html>
+
+
+-- v-for (데이터 배열 사용하기2 )
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+</head>
+<body>
+    <div class="container">
+          <ul>
+              <li v-for="(dept, index) in deptList" :key="index">
+                  {{index}} {{ dept.no }} / {{ dept.name }}
+              </li>
+          </ul>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+new Vue({
+    el: '.container',
+    data: {
+        deptList: [
+            {
+                name: "홍길동",
+                no: "00001"
+            },
+            {
+                name: "이손신",
+                no: "00002"
+            },
+            {
+                name: "일지매",
+                no: "00003"
+            },
+            {
+                name: "세종",
+                no: "00003"
+            },
+        ]
+    }
+})
+</script>
+</html>
+
+
+-- v-for ( 오브젝트 값과 , 키값 알기  )
+
+<html>
+<head>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <title>Stories</title>
+</head>
+<body>
+  <div class="container">
+      <h1>Let's hear some stories!</h1>
+      <ul class="list-group">
+          <li v-for="(value, key, index) in story" :key="index" class="list-group-item">
+              {{index}} : {{key}} : {{value}}
+          </li>
+      </ul>
+  </div>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+new Vue({
+    el: '.container',
+    data: {
+        story: {
+            plot: "Someone ate my chocolate...",
+            writer: 'John',
+            upvotes: 47
+        }
+    }
+})
+</script>
+</html>
+
+-- v-text
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <span v-text="message"></span>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          message: 'Hello, Vue!'
+        }
+      });
+    </script>
+  </body>
+</html>
+
+-- v-html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <span v-html="message"></span>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          message: 'Hello,<br>Vue!'
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- css 바인딩
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Vue Template - Data Binding</title>
+  </head>
+  <body>
+    <div id="app">
+      <p v-bind:id="idA">아이디 바인딩</p>
+      <p v-bind:class="classA">클래스 바인딩</p>
+      <p v-bind:style="styleA">스타일 바인딩</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          idA: 10,
+          classA: 'container',
+          styleA: 'color: blue'
+        }
+      });
+    </script>
+  </body>
+</html>
+
+-- 디렉티브 종합 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Vue Template - Directives</title>
+  </head>
+  <body>
+    <div id="app">
+      <a v-if="flag">두잇 Vue.js</a>
+      <ul>
+        <li v-for="system in systems">{{ system }}</li>
+      </ul>
+      <p v-show="flag">두잇 Vue.js</p>
+      <h5 v-bind:id="uid">뷰 입문서</h5>
+      <button v-on:click="popupAlert">경고 창 버튼</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          flag: true,
+          systems: ['android', 'ios', 'window'],
+          uid: 10
+        },
+        methods: {
+          popupAlert: function() {
+            return alert('경고 창 표시');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+
+
+###############################################
+# 이벤트 v-on 붙인다.
+###############################################
+
+-- click 이벤트 
+
+<html>
+  <head>
+    <title>Vue Template - Event Handling</title>
+  </head>
+  <body>
+    <div id="app">
+      <button v-on:click="clickBtn">클릭</button>
+       <input type="text" v-on:keyup="arrowKey">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        methods: {
+          clickBtn: function(event) {
+            console.log(event);
+          } ,
+          arrowKey: function(event) {
+            console.log(event);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+
+
+-- click 이벤트 
+<html>
+  <head>
+    <title>Vue Template - Event Handling</title>
+  </head>
+  <body>
+    <div id="app">
+      <button v-on:click="clickBtn">클릭</button>
+		</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        methods: {
+          clickBtn: function() {
+            alert('clicked');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+
+-- click 이벤트  2
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+    <div class="container">
+        <button v-on:click="upvote"> <!--<button @click="upvote"> 동일, 축약형 -->
+            증가 {{upvotes}}
+        </button>
+        {{upvotes}}
+
+    </div>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+new Vue({
+    el: '.container',
+    data: {
+        upvotes: 0
+    },
+
+    methods: {
+        upvote: function () {
+            this.upvotes++;
+        }
+    }
+})
+</script>
+</html>
+
+-- click
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+
+  <body>
+    <div id="app">
+      <p>Counter: {{ counter }}</p>
+      <button v-on:click="counter += 1">클릭</button>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          counter: 0
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- 계산기 click 이벤트2  
+   마이플렛폼처럼 바인딩 개념이 있음,  v-model 와 data 매핑함.
+   
+   event.preventDefault(); 이벤트 일어나는거 죽인다.
+   굿이 form , submit 필요 없지만 이벤트 막는걸 예제로 들어서 추가됨.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <div class="container">
+
+    <form>
+      <input v-model.number="a" >
+
+      <select v-model="operator" >
+        <option>+</option>
+        <option>-</option>
+        <option>*</option>
+        <option>/</option>
+      </select>
+
+      <input v-model.number="b">
+
+      <button type="submit" @click="calculate">Calculate</button>
+
+  </form>
+  <h2>Result: {{a}}  {{operator}}  {{b}} = {{c}}</h2>
+
+</div>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+new Vue({
+  el: '.container',
+  data: {
+    a: 1,
+    b: 2,
+    c: null,
+    operator: '+',
+  },
+  methods: {
+    calculate: function (event) {
+      event.preventDefault();
+      switch (this.operator) {
+        case '+':
+          this.c = this.a + this.b
+          break;
+        case '-':
+          this.c = this.a - this.b
+          break;
+        case '*':
+          this.c = this.a * this.b
+          break;
+        case '/':
+          this.c = this.a / this.b
+          break;
+      }
+    }
+  },
+});
+</script>
+</html>
+
+-- 키 이벤트 , 미리정해진 이벤트키 사용하기.
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <input v-model="name">
+      {{ name }}
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          name: 'Kim Jihwan'
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- 키 이벤트 여러개 달기.
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <input type="text" @keyup.up.down.left.right="arrowKey">
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        methods: {
+          arrowKey: function () {
+            console.log(event.key);
+            event.target.value = event.key;
+          },
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- 이벤트 , keyCode 키값 알기.
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <input type="text" @keydown="preventKey">
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        methods: {
+          preventKey: function () {
+            if(event.keyCode == 8 || event.keyCode == 46)
+              event.preventDefault();
+          },
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- 이벤트, 한번만 실행시키기.
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <a href="https://www.google.com" @click.once.prevent="showAlert">click</a>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        methods: {
+          showAlert: function () {
+            alert('있을 때 잘해 후회하지 말고');
+          }
+        },
+      });
+    </script>
+  </body>
+</html>
+
+-- 이벤트, 이벤트 코드 받아오기.
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      .screen {
+        width: 100%;
+        height: 400px;
+        background-color: #DDD;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <div v-on:mousemove="trackingMouse" class="screen">
+        {{ mouse.x }}, {{ mouse.y }}
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          mouse: {
+            x: 0,
+            y: 0
+          }
+        },
+        methods: {
+          trackingMouse: function (event) {
+            this.mouse.x = event.clientX;
+            this.mouse.y = event.clientY;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- 이벤트
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <button @click="changeSet">Change Set</button>
+      <div v-for="item in items" :key="item.key" @click="paint">
+        Key: {{ item.key }} / ID: {{ item.id }}
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        mounted: function () {
+          this.changeSet();
+        },
+        data: {
+          presetNumber: 0,
+          items: [],
+          preset: [
+            [
+              {id: 1, key: 1},
+              {id: 2, key: 1},
+              {id: 3, key: 2},
+              {id: 4, key: 3},
+              {id: 5, key: 5},
+              {id: 6, key: 8}
+            ],
+            [
+              {id: 7, key: 1},
+              {id: 8, key: 2},
+              {id: 9, key: 3},
+              {id: 10, key: 4},
+              {id: 11, key: 5},
+              {id: 12, key: 6},
+              {id: 13, key: 7},
+              {id: 14, key: 8}
+            ]
+          ]
+        },
+        methods: {
+          changeSet: function( ) {
+            this.presetNumber = 1 - this.presetNumber;
+            this.items = JSON.parse(JSON.stringify(this.preset[this.presetNumber])); // Deep copy
+          },
+          paint: function () {
+            if (event.target.style.background)
+              event.target.style.background = null;
+            else
+              event.target.style.background = 'yellow';
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- computed  속성
+
+   바인딩된 변수가 변경이 일어나면 자동 호출되는것. 
+   즉시실행함수 처럼 한번 자동 수행됨.
+
+<html>
+<head>
+  <title>Calculator</title>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+</head>
+<body>
+
+  <div id="app">
+      {{ reversedMessage }}
+
+       <input v-model.message="message" >
+
+  </div>
+
+  <script>
+  var vm = new Vue({
+      el: '#app',
+      data: {
+          message: 'aaa'
+      },
+      computed : {
+          reversedMessage : function(){
+              return this.message;
+          }
+      }
+  });
+  </script>
+</html>
+
+-- watch 속성, 연결된 데이터가 변경되면 올드벨류, 뉴벨로 사용가능. 비동기 사용할때 쓴다고 함..
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Vue Template - Watch</title>
+  </head>
+  <body>
+    <div id="app">
+      <input v-model="message">
+      <input v-model="aa">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          message: 'Hello Vue.js!' ,
+          aa : 123
+        },
+        watch: {
+          message: function(newVal, oldVal) {
+          console.log(oldVal + '에서 ' + newVal + '로 변경되었습니다.');
+          this.aa = oldVal;
+		  //this.message = 'xxx'; 이렇게 해도 무한루프 돌지 않음.
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+			 
+			 
+-- 계산기 			 
+			 
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+  <div class="container">
+
+      <input v-model.number="a">
+      
+      <select v-model="operator">
+        <option>+</option>
+        <option>-</option>
+        <option>*</option>
+        <option>/</option>
+      </select>
+
+      <input v-model.number="b" >
+
+  <h2>Result: {{a}}  {{operator}}  {{b}} = {{c}}</h2>
+
+</div>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+new Vue({
+  el: '.container',
+  data: {
+    a: 1,
+    b: 2,
+    operator: "+",
+  },
+  computed: {
+    c: function () {
+      switch (this.operator) {
+        case '+':
+          return this.a + this.b
+        case '-':
+          return this.a - this.b
+        case '*':
+          return this.a * this.b
+        case '/':
+          return this.a / this.b
+      }
+    }
+  },
+});
+</script>
+</html>
+
+-- 계산기 계산버튼 안누루고 키 이벤트 받아서 계산
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+  <div class="container">
+
+      <input v-model.number="a">
+
+      <select v-model="operator">
+        <option>+</option>
+        <option>-</option>
+        <option>*</option>
+        <option>/</option>
+      </select>
+
+      <input v-model.number="b" >
+
+  <h2>Result: {{a}}  {{operator}}  {{b}} = {{c}}</h2>
+
+</div>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+new Vue({
+  el: '.container',
+  data: {
+    a: 1,
+    b: 2,
+    c: 0,
+    operator: "+",
+  },
+
+  updated: function() {
+
+    switch (this.operator) {
+      case '+':
+        this.c = this.a + this.b
+        break;
+      case '-':
+        this.c = this.a - this.b
+        break;
+      case '*':
+        this.c = this.a * this.b
+        break;
+      case '/':
+        this.c = this.a / this.b
+        break;
+    }
+  }
+
+});
+</script>
+</html>
+
+
+-- 데이터 필터 하기
+
+<html>
+
+<body>
+    <div class="container">
+
+        <div>
+            <h3>Alex's stories</h3>
+            <ul>
+                <li v-for="story1 in storiesBy('Alex')" >
+                    {{ story1.writer }} / "{{ story1.plot }}"
+                </li>
+            </ul>
+            <h3>John's stories</h3>
+            <ul>
+                <li v-for="story1 in storiesBy('John')"  >
+                    {{ story1.writer }} / "{{ story1.plot }}"
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+new Vue({
+    el: '.container',
+    data: {
+        stories: [
+            {
+                plot: "I crashed my car today!",
+                writer: "Alex"
+            },
+            {
+                plot: "Yesterday, someone stole my bag!",
+                writer: "John"
+            },
+            {
+                plot: "Someone ate my chocolate...",
+                writer: "John"
+            },
+            {
+                plot: "I ate someone's chocolate!",
+                writer: "Alex"
+            },
+        ]
+    },
+    methods:
+    {
+
+      storiesBy: function (writer) {
+        //console.log(writer); // Alex 이나 Alex 문자열
+        return this.stories.filter(function (n) { // filter 함수는 파라미터로 함수를 받는 함수이다.
+
+          return n.writer === writer // 클로저 개념으로 writer 을 사용할수 있다.
+		                             // filter 함수는 true인 요소만 모아서 새로운 배열을 만들어서 배열을 리턴함
+                                     // v-for="story1 에서는 배열로 받는다.
+        })
+      },
+    }
+})
+</script>
+</html>
+
+<!--
+자바스크립트 filter 함수
+
+filter 메소드는 이름 그대로 요소들을 걸러내는 것이 목적입니다. 예제를 봅시다.
+
+// 정수 배열에서 5의 배수인 정수만 모으기
+var arr = [4, 15, 377, 395, 400, 1024, 3000];
+var arr2 = arr.filter(function (n) {
+    return n % 5 == 0;
+});
+console.log(arr2); // [15, 395, 400, 3000]
+-->
+
+
+##########################################
+# 컴퍼넌트
+##########################################
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+   
+  </head>
+<body>
+    <div class="container">
+      <my-component></my-component>
+      <my-component></my-component>
+      <my-component></my-component>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+
+Vue.component('my-component', {
+    template: '<h1>하이!</h1>'
+});
+
+new Vue({
+    el: '.container'
+})
+</script>
+</html>
+
+-- 컴퍼넌트 template id지정해서 별도로 빼기
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+  </head>
+<body>
+    <div class="container">
+        <story></story>
+    </div>
+</body>
+
+<template id="story-template">
+    <h1>컴퍼넌트!!!!</h1>
+</template>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+
+<script type="text/javascript">
+
+Vue.component('story', {
+    template: "#story-template"
+});
+
+new Vue({
+    el: '.container'
+})
+</script>
+</html>
+
+-- 컴퍼넌트 template id지정해서 별도로 빼기 (데이터 사용 ) , 뭔가 이상함
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+  </head>
+  <body>
+
+    <div id="app">
+      <child-component v-bind:propsdata="message"> </child-component>
+    </div>
+    
+<template id="story-template">
+    <h1> {{propsdata}} </h1>
+</template>
+
+</body>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+
+    <script>
+
+      Vue.component('child-component', {
+        props: ['propsdata'],
+        template: "#story-template"
+      });
+
+      new Vue({
+        el: '#app',
+        data: {
+          message: '11111111111'
+        }
+      });
+    </script>
+
+</html>
+
+
+
+-- 컴퍼넌트 , props 단건
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+</head>
+<body>
+  <div class="container">
+          <ul>
+           <child-component v-bind:story="stories"></child-component>
+          </ul>
+  </div>
+
+  <template id="my-component1">
+    <li>
+      {{ story }}
+    </li>
+  </template>
+
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+
+Vue.component('child-component', {
+    props: ['story'],
+    template: '#my-component1'
+});
+
+new Vue({
+  el: '.container',
+  data: {
+    stories: '11111111111'
+  }
+
+})
+</script>
+</html>
+
+
+-- 컴퍼넌트 , props for문
+
+<html>
+<head>
+
+</head>
+<body>
+  <div class="container">
+          <ul>
+           <child-component v-for="(story) in stories" :story="story"></child-component>
+            <!--  <child-component v-for="(story, index) in stories" :key="index" :story="story"></child-component>  -->
+          </ul>
+  </div>
+
+  <template id="my-component1">
+    <li>
+      {{ story.writer }} / {{ story.body }}
+    </li>
+
+  </template>
+
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+
+Vue.component('child-component', {
+
+    props: ['story'],
+    template: '#my-component1'
+});
+
+new Vue({
+  el: '.container',
+  data: {
+    stories: [
+      {
+        body: "AAAAAAAAAAAAAA",
+        writer: "11111"
+      },
+      {
+        body: "BBBBBBBBBBBBBBBBB",
+        writer: "22222"
+      },
+      {
+        body: "CCCCCCCCCCCC",
+        writer: "33333"
+      },
+      {
+        body: "DDDDDDDDDDDDDDD",
+        writer: "44444"
+      },
+    ]
+  }
+
+
+})
+</script>
+</html>
+
+
+-- 컴퍼넌트 , props for문 , 버튼 체크 이벤트 사용
+<html>
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <title>Hello Vue</title>
+</head>
+<body>
+
+  <div id="app">
+    <div class="container">
+      <h1>Let's hear some stories!</h1>
+      <ul class="list-group">
+        <story v-for="(story, index) in stories" :key="index" :story="story"></story>
+      </ul>
+      <pre>{{ $data }}</pre>
+    </div>
+  </div>
+
+  <template id="story-template">
+    <li class="list-group-item">
+      {{ story.writer }} / {{ story.plot }}  / {{ story.upvotes }}
+      <button v-show="!story.voted" @click="upvote" class="btn btn-default">
+        Upvote
+      </button>
+    </li>
+  </template>
+
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+
+<script type="text/javascript">
+
+Vue.component('story', {
+    template: "#story-template",
+    props: ['story'],
+    methods:{
+        upvote: function () {
+            this.story.upvotes += 1;
+            this.story.voted = true;
+        },
+    }
+});
+
+new Vue({
+    el: '#app',
+    data: {
+        stories: [
+            {
+                plot: 'My horse is amazing.',
+                writer: 'Mr. Weebl',
+                upvotes: 28,
+                voted: false,
+            },
+            {
+                plot: 'Narwhals invented Shish Kebab.',
+                writer: 'Mr. Weebl',
+                upvotes: 8,
+                voted: false,
+            },
+            {
+                plot: 'The dark side of the Force is stronger.',
+                writer: 'Darth Vader',
+                upvotes: 49,
+                voted: false,
+            },
+            {
+                plot: 'One does not simply walk into Mordor',
+                writer: 'Boromir',
+                upvotes: 74,
+                voted: false,
+            },
+        ]
+    }
+})
+</script>
+</html>
+
+
+-- 사용자 이벤트  $emit , 생명주기 created 시점에 등록한다.
+
+<html>
+<head>
+  <title>Emit and Listen</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container text-center">
+    <p style="font-size: 140px;">
+      {{ votes }}
+    </p>
+    <button class="btn btn-primary" @click="vote">Vote</button>
+  </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+new Vue({
+  el: '.container',
+  data: {
+    votes: 0
+  },
+  methods:
+  {
+    vote: function () {
+      this.$emit('voted');
+	  // this.votes++ // created 함수 없이 이렇게 해도 효과는 동일함 , 사용자 이벤트를 만들기위한 예제임.
+    },
+  },
+  created () {
+    this.$on('voted', function() {
+      this.votes++
+    })
+  }
+})
+</script>
+</html>
+
+-- 라우팅 , 페이지 전환 , 라우팅이란 html 페이지를 전환하는것이다. a.jsp -> b.jsp 라우터란 라우팅을 하기위한 라이브러리 이다.
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Router Sample</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>뷰 라우터 예제</h1>
+      <p>
+        <router-link to="/main">Main 컴포넌트로 이동</router-link>
+        <router-link to="/login">Login 컴포넌트로 이동</router-link>
+      </p>
+      <router-view></router-view>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script>
+    <script>
+      // 3. Main. Login 컴포넌트 내용 정의
+      var Main = { template: '<div>main</div>' };
+      var Login = { template: '<div>login</div>' };
+
+      // 4. 각 url에 해당하는 컴포넌트 등록
+      var routes = [
+        { path: '/main', component: Main },
+        { path: '/login', component: Login }
+      ];
+
+      // 5. 뷰 라우터 정의
+      var router = new VueRouter({
+        routes
+      });
+
+      // 6. 뷰 라우터를 인스턴스에 등록
+      var app = new Vue({
+        router
+      }).$mount('#app');
+    </script>
+  </body>
+</html>
+
+
+
+###############################################
+# input 태그
+###############################################
+
+-- text , textarea
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+		<title>Vue with Axios Sample</title>
+	</head>
+
+  <body>
+    <div id="app">
+      <label>
+        input[type=text]:<br>
+        <input type="text" v-model="textMessage">
+        <p>{{ textMessage }}</p>
+      </label>
+
+      <hr>
+
+      <label>
+        textarea:<br>
+        <textarea v-model="textareaMessage"></textarea>
+        <p style="white-space: pre">{{ textareaMessage }}</p>
+      </label>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          textMessage: 'Hello, Vue!!',
+          textareaMessage: 'Hello,\nVue!'
+        }
+      });
+    </script>
+  </body>
+</html>
+
+-- 라디오
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+		
+	</head>
+
+  <body>
+    <div id="app">
+      <input type="radio" id="man" value="man" v-model="gender">
+      <label for="man">남자</label>
+      <br>
+      <input type="radio" id="girl" value="girl" v-model="gender">
+      <label for="girl">여자</label>
+      <br>
+      <span>선택: {{ gender }}</span>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          gender: ''
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- 라디오 , 선택한값 표시
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+	</head>
+
+  <body>
+    <div id="app">
+      <input type="radio" v-model="lateNightMeal" v-bind:value="foods[0]">
+      <input type="radio" v-model="lateNightMeal" v-bind:value="foods[1]">
+      <input type="radio" v-model="lateNightMeal" v-bind:value="foods[2]">
+      {{ lateNightMeal }}
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          lateNightMeal: 'Hambergur',
+          foods: [
+            'Ramen',
+            'Hambergur',
+            'chicken',
+          ]
+        }
+      });
+    </script>
+  </body>
+</html>
+
+-- checkbox
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+		
+	</head>
+
+  <body>
+    <div id="app">
+      <input type="checkbox" id="check1" value="맥북 15인치 레티나" v-model="checked">
+      <label for="check1">맥북 15인치 레티나</label>
+      <input type="checkbox" id="check2" value="퀸사이즈 침대" v-model="checked">
+      <label for="check2">퀸사이즈 침대</label>
+      <input type="checkbox" id="check3" value="65인치 UHD 벽걸이형 티비" v-model="checked">
+      <label for="check3">65인치 UHD 벽걸이형 티비</label>
+      <br>
+      <span>장바구니: {{ checked }}</span>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          checked: []
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- checkbox , 선택한값 표시
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+	</head>
+
+  <body>
+    <div id="app">
+      <input type="checkbox" v-model="checkboxModel" v-bind:true-value="trueValue" v-bind:false-value="falseValue">
+      {{ checkboxModel }}
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          checkboxModel: 'hello',
+          trueValue: 'hello',
+          falseValue: 'world'
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- select
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+	</head>
+
+  <body>
+    <div id="app">
+      <select v-model="selected">
+        <option disabled value="">당신의 혈액형은?</option>
+        <option v-for="type in ['A', 'B', 'O', 'AB']" v-bind:value="type">{{ type }}</option>
+      </select>
+      <p>{{ selected }}</p>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          selected: ''
+        }
+      });
+    </script>
+  </body>
+</html>
+
+-- select , 선택한값 표시
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+	</head>
+
+  <body>
+    <div id="app">
+      <select v-model="selectModel">
+        <option v-for="artist in artists" v-bind:value="artist">{{ artist }}</option>
+      </select>
+      {{ selectModel }}
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          selectModel: 'Sarah McLachlan',
+          artists: [
+            "Sister’s barbershop",
+            "Sarah McLachlan",
+            "Coldplay",
+            "Tori Kelly",
+          ]
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- lazy, 포커스가 나가면 값표시하기.
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <input type="text" v-model.lazy="lazyModel">
+      <p>{{ lazyModel }}<p>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          lazyModel: 'hello',
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+-- trim , v-model옆에 이렇게 함수 처럼 쓸수있다.
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <input type="text" v-model.trim="trimModel">
+      <p>{{ trimModel }}<p>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          trimModel: '1          trim       1',
+        }
+      });
+    </script>
+  </body>
+</html>
+
+###################################
+# 통신 $http.get
+###################################
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+	</head>
+  <body>
+    <div id="app">
+      <button v-on:click="getData">프레임워크 목록 가져오기</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        methods: {
+          getData: function() {
+            this.$http.get(`https://raw.githubusercontent.com/joshua1988/doit-vuejs/master/data/demo.json`)
+                .then(function(response) {
+                  console.log(response);
+                  console.log(JSON.parse(response.data));
+                });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
+
+-- axios 이용
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+	</head>
+	<body>
+		<div id="app">
+			<button v-on:click="getData">프레임워크 목록 가져오기</button>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script>
+			new Vue({
+				el: '#app',
+				methods: {
+					getData: function() {
+						axios.get('https://raw.githubusercontent.com/joshua1988/doit-vuejs/master/data/demo.json')
+							.then(function(response) {
+								console.log(response);
+                console.log(response.data);
+                  console.log(response.data.be1);
+
+							});
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
+
+
+-- 메모 관리
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<!-- css 영역 -->
+
+<style>
+* {
+box-sizing: border-box;
+}
+
+ul {
+
+margin: 0;
+
+padding: 0;
+
+}
+
+​
+
+</style>
+
+<title>05-09</title>
+
+<!-- end css 영역 -->
+
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+
+</head>
+
+​
+
+<body>
+
+<!--마크업 된 소스에 디렉티브 사용법-->
+
+<div id="todolistapp">
+
+​
+
+<div id="header" class="header">
+
+<h2>Todo List App</h2>
+
+<input class="input" type="text" id="task" v-model.trim="todo"
+
+placeholder="입력 후 엔터!" v-on:keyup.enter="addTodo"> <span
+
+class="addbutton" v-on:click="addTodo">추 가</span>
+
+</div>
+
+​
+
+<ul id="todolist">
+
+<li v-for="a in todolist" v-bind:class="checked(a.done)" v-on:click="doneToggle(a.id)"><span>{{a.todo}}</span>
+
+<span v-if="a.done">(완료)</span>
+
+<span class="close" v-on:click.stop="deleteTodo(a.id)">×</span>
+
+</li>
+
+</ul>
+
+​
+
+</div>
+
+<script type="text/javascript">
+
+​
+
+// 뷰 인스턴스 사용법
+
+var vm = new Vue({
+
+​
+
+el: "#todolistapp",
+
+​
+
+data: {
+
+todo: "",
+
+todolist: [ {
+
+id: 1,
+
+todo: "영화보기",
+
+done: false
+
+},
+
+​
+
+{
+
+id: 2,
+
+todo: "장보기",
+
+done: true
+
+},
+
+​
+
+{
+
+id: 3,
+
+todo: "TV보기",
+
+done: false
+
+},
+
+​
+
+{
+
+id: 4,
+
+todo: "유튜브보기",
+
+done: false
+
+},
+
+​
+
+{
+
+id: 5,
+
+todo: "꼬부기",
+
+done: false
+
+}
+
+]
+
+},
+
+​
+
+methods: {
+
+checked: function(done) {
+
+if (done) return {
+
+checked: true
+
+};
+
+else return {
+
+checked: false
+
+};
+
+},
+
+​
+
+addTodo: function(e) {
+
+if (this.todo.trim() !== "") {
+
+this.todolist.push({
+
+id: new Date().getTime(),
+
+todo: this.todo.trim(),
+
+done: false
+
+});
+
+this.todo = "";
+
+}
+
+},
+
+​
+
+deleteTodo: function(id) {
+
+​
+
+// 클릭을 하면 해당 todo 의 인덱스를 찾고
+
+var index = this.todolist.findIndex(function(item) {
+
+return item.id === id;
+
+})
+
+​
+
+// 인덱스 부터 하나의 데이터를 자른다 (없앤다)
+
+this.todolist.splice(index, 1);
+
+},
+
+​
+
+doneToggle: function(id) {
+
+​
+
+// 클릭을 하면 해당 todo 의 인덱스를 찾고
+
+var index = this.todolist.findIndex(function(item) {
+
+return item.id === id;
+
+})
+
+​
+
+// done 프로퍼티를 토글 시켜주기 위해 반대값을 넣는다.
+
+this.todolist[index].done = !this.todolist[index].done;
+
+}
+
+}
+
+​
+
+})
+
+</script>
+
+</body>
+
+​
+
+</html>
+
+
