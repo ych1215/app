@@ -1,1 +1,5 @@
-test
+package com;
+
+public class test {
+	
+}
